@@ -4,7 +4,7 @@
 	id		= "com.uBridge.getting.started"
 	version 	= "1.0.0">
 
-	<name>PhoneGap: Getting Started</name>
+	<name>uBridge Application</name>
 
 	<description>
 		uBridge is a revlutionary event application
