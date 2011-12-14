@@ -1,8 +1,10 @@
 body {
   background: #fff;
   background: -webkit-gradient(linear, 100% 0%, 0% 0%, from(#C8C8C8), color-stop(0.47, white), to(#C8C8C8));
+  background:url(../img/bg.gif) #333333;
   margin: 0;
   font: 18px Helvetica;
+  color:#8F8F8F;
   text-align: center;
 }
 
@@ -91,3 +93,27 @@ body {
   input {
     margin-bottom: 8px;
   }
+  
+  /* === Countdown Section === */
+
+
+#countdown{
+	visibility:hidden;
+}
+#countdown span .letter{
+	background:url(../img/letters.png) no-repeat 0px 0px;
+	height:60px;
+	padding:34px 14px 10px 13px;
+	padding:34px 0px 10px 12px;
+	margin:0;
+}
+#countdown span span.c.i_1{background-position:0 0}
+#countdown span span.c.i_2{background-position:-33px 0;}
+#countdown span span.c.i_3{background-position:-66px 0;}
+#countdown span span.c.i_4{background-position:-99px 0;}
+#countdown span span.c.i_5{background-position:-132px 0;}
+#countdown span span.c.i_6{background-position:-165px 0;}
+#countdown span span.c.i_7{background-position:-198px 0;}
+#countdown span span.c.i_8{background-position:-231px 0;}
+#countdown span span.c.i_9{background-position:-264px 0;}
+#countdown span span.c.i_0{background-position:-297px 0;}
