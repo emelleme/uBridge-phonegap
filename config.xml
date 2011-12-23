@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns		= "http://www.w3.org/ns/widgets"
 	xmlns:gap	= "http://phonegap.com/ns/1.0"
-	id		= "com.uBridge.getting.started"
+	id		= "com.phonegap.ubridge.start"
 	version 	= "1.0.0">
 
-	<name>PhoneGap: Getting Started</name>
+	<name>uBridge Application</name>
 
 	<description>
 		uBridge is a revlutionary event application
