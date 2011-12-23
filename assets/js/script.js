@@ -17,9 +17,8 @@ function getProfile(userId) {
 }
 
 $( '#startPage' ).live( 'pageinit',function(event){
-  alert( 'This page was just enhanced by jQuery Mobile!' );
   $("#next").bind( "click", function(e, ui) {
-		console.log('test');
+		
 		e.stopImmediatePropagation();
 		e.preventDefault();
 		$.mobile.showPageLoadingMsg();	
@@ -31,7 +30,12 @@ $( '#startPage' ).live( 'pageinit',function(event){
 		  },
 		  "success": function(payload) {
 		      // handle user profile here
-		      alert("SMS on its way! "+payload.sid); 
+		      alert("We just sent you a text message.");
+		      $.mobile.changePage($("#verify-phone")); 
+		      $.storage = new $.store();
+		      $.storage.set( payload.pin, payload.pin );
+		      $.storage.set( 'PData', JSON.stringify(payload) );
+		      console.log(JSON.stringify(payload));
 		  },
 		  "error": function(d,msg) {
 		      alert("Im Sorry, but there was an error communicating with the Phone Verification Server.");
@@ -39,6 +43,40 @@ $( '#startPage' ).live( 'pageinit',function(event){
 		});
 		
 		return false;
+	});
+});
+
+
+$( '#verify-phone' ).live( 'pageinit',function(event){	
+	$("#next-login").bind( "click", function(e, ui) {
+		$.storage = new $.store();
+		e.stopImmediatePropagation();
+		e.preventDefault();
+		$.mobile.showPageLoadingMsg();	
+		
+		//Do important stuff....
+		
+		//Check Pin
+		var testpin = $('#pinField input[id="SmsPin"]').val();
+		
+		if(!$.storage.get(testpin)){
+			console.log('test failed');
+			alert("Invalid Pin try again.");
+			$.mobile.hidePageLoadingMsg();		
+			//console.log($();
+			return false;
+		}else{
+			var payload = $.storage.get('PData');
+			//payload = JSON.parse(payload);
+			//console.log(payload);
+			$.storage.flush();
+			$.storage.set("formattedPhone", payload.formattedPhone);
+			$.storage.set("phone", payload.phone);
+			$.storage.set("fullName", $('#startField input[id="name"]').val());
+			$.mobile.changePage($("#user-login"));
+		}
+		
+		
 	});
 });
 

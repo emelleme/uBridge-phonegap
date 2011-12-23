@@ -4,10 +4,10 @@
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
 		<title>Training App</title>
 		<link rel="stylesheet" href="assets/css/ubridge.css" type="text/css" media="screen" />
-		 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile.structure-1.0.min.css" /> 
+		 <link rel="stylesheet" href="assets/css/jquery.mobile.structure-1.0.min.css" /> 
 		<script>document.createElement('nav');document.createElement('section');</script>
-		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script> 
-  <script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script> 
+		<script src="assets/js/jquery-1.6.4.min.js"></script> 
+  <script src="assets/js/jquery.mobile-1.0.min.js"></script> 
 		
 		<script src="assets/js/cufon.js" type="text/javascript" charset="utf-8"></script>
 		
@@ -16,6 +16,10 @@
 		<script src="assets/js/config.js" type="text/javascript" charset="utf-8"></script>
 		
 		<script src="assets/js/jquery.jsonp-2.2.0.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script src="assets/js/store/json2.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script src="assets/js/store/jquery.store.js" type="text/javascript" charset="utf-8"></script>
 		
 		<script src="assets/js/script.js" type="text/javascript" charset="utf-8"></script>
 		
@@ -33,7 +37,7 @@
 			<div data-role="fieldcontain">
 			<div>
 			
-				<fieldset data-role="controlgroup" data-type="vertical" data-role="fieldcontain"> 
+				<fieldset id="startField" data-role="controlgroup" data-type="vertical" data-role="fieldcontain"> 
 					<h3>Welcome! Enter your name and phone number below to begin.</h3>
 				<div data-role="fieldcontain">
 			     <h4>Name</h4>
@@ -42,12 +46,64 @@
 				
 				<div data-role="fieldcontain">
 				<h4>Phone Number</h4>
-			     <input type="text" name="name" id="name" placeholder="uMessages sent here" value=""  />
+			     <input type="text" name="phone" id="phone" placeholder="uMessages sent here" value=""  />
 				</div>
 					
 		
 				<div data-role="fieldcontain">
 					<div><button id="next" type="submit" data-theme="c">Next</button></div>
+				</div>
+
+				</fieldset>
+			</div>
+			</div>
+		</div><!-- content -->
+	</div>
+	
+	<div id="verify-phone" data-role="page" data-theme="c">
+
+		<div data-role="header" id="Header" data-theme="b">
+			<h1><strong>&#956;</strong>Bridge - Verify Phone</h1>
+		</div><!-- /header -->
+
+		<div data-role="content">	
+			<div data-role="fieldcontain">
+			<div>
+			
+				<fieldset id="pinField" data-role="controlgroup" data-type="vertical" data-role="fieldcontain"> 
+					<h3>We just sent you a text message...</h3>
+				<div data-role="fieldcontain">
+			     <h4>Secret Code</h4>
+			     <input type="text" name="name" id="SmsPin" placeholder="Enter your Secret Code here" value=""  />
+				</div>
+					
+		
+				<div data-role="fieldcontain">
+					<div><button id="next-login" type="submit" data-theme="c">Next</button></div>
+				</div>
+
+				</fieldset>
+			</div>
+			</div>
+		</div><!-- content -->
+	</div>
+	
+	<div id="user-login" data-role="page" data-theme="c">
+
+		<div data-role="header" id="Header" data-theme="b">
+			<h1><strong>&#956;</strong>Bridge - User Login</h1>
+		</div><!-- /header -->
+
+		<div data-role="content">	
+			<div data-role="fieldcontain">
+			<div>
+			
+				<fieldset id="pinField" data-role="controlgroup" data-type="vertical" data-role="fieldcontain"> 
+					<h3>Choose from below to login.</h3>
+				<div data-role="fieldcontain">
+					<div><button id="next-login" type="submit" data-theme="c">Facebook</button></div>
+					<div><button id="next-login" type="submit" data-theme="c">Twitter</button></div>
+					<div><button id="next-login" type="submit" data-theme="c">Foursquare</button></div>
 				</div>
 
 				</fieldset>
