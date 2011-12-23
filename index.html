@@ -3,9 +3,11 @@
 	<head>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
 		<title>Training App</title>
-		<link rel="stylesheet" href="assets/css/master.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="assets/css/ubridge.css" type="text/css" media="screen" />
+		 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile.structure-1.0.min.css" /> 
 		<script>document.createElement('nav');document.createElement('section');</script>
-		<script src="assets/js/jquery.1.4.4.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script> 
+  <script src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script> 
 		
 		<script src="assets/js/cufon.js" type="text/javascript" charset="utf-8"></script>
 		
@@ -13,50 +15,46 @@
 		
 		<script src="assets/js/config.js" type="text/javascript" charset="utf-8"></script>
 		
+		<script src="assets/js/jquery.jsonp-2.2.0.js" type="text/javascript" charset="utf-8"></script>
+		
 		<script src="assets/js/script.js" type="text/javascript" charset="utf-8"></script>
+		
+		
 	</head>
 	<body>
- 		<div id="title_bar"><strong>&#956;</strong>Bridge</div>
 
-		<div id="welcome" class="view">
-		<p><strong>&#956;</strong>Bridge is under construction. next update in</p>
+	<div id="startPage" data-role="page" data-theme="c">
+
+		<div data-role="header" id="Header" data-theme="b">
+			<h1><strong>&#956;</strong>Bridge</h1>
+		</div><!-- /header -->
+
+		<div data-role="content">	
+			<div data-role="fieldcontain">
+			<div>
+			
+				<fieldset data-role="controlgroup" data-type="vertical" data-role="fieldcontain"> 
+					<h3>Welcome! Enter your name and phone number below to begin.</h3>
+				<div data-role="fieldcontain">
+			     <h4>Name</h4>
+			     <input type="text" name="name" id="name" placeholder="Your Name e.g. John Doe" value=""  />
+				</div>
+				
+				<div data-role="fieldcontain">
+				<h4>Phone Number</h4>
+			     <input type="text" name="name" id="name" placeholder="uMessages sent here" value=""  />
+				</div>
+					
 		
-		<!-- countdown start -->
-				<section id="countdown">
-				<span id="days">4</span><span id="hours"></span><span id="minutes"></span><span id="seconds"></span>
-				</section>
-				<!-- countdown end -->
-		  
-		</div>
+				<div data-role="fieldcontain">
+					<div><button id="next" type="submit" data-theme="c">Next</button></div>
+				</div>
 
-		<div id="map" class="view">
-		  <div class="map_image">
-              <img id="static_map" src="assets/img/staticmap.png">
-		  </div>
-		  <p>This is where you are</p>
-		  <div class="app_button" id="welcome_button">Go Back</div>
-		</div>
-
-		<div id="settings" class="view">
-		  <form id="settings_form">
-		    <fieldset>
-		      <legend>Map Type</legend>
-			  <input type="radio" name="map" value="roadmap" checked>Road Map<br/>
-		      <input type="radio" name="map" value="satellite">Satellite<br/>
-		      <input type="radio" name="map" value="terrain">Terrain<br/>
-		      <input type="radio" name="map" value="hybrid">Hybrid<br/>
-		    </fieldset>
-		    <fieldset>
-		      <legend>Zoom Level</legend>
-  		      <input type="radio" name="zoom" value="10">Super Far<br/>
-  		      <input type="radio" name="zoom" value="12">Far<br/>
-  		      <input type="radio" name="zoom" value="15" checked>Normal<br/>
-  		      <input type="radio" name="zoom" value="18">Close<br/>
-  		      <input type="radio" name="zoom" value="20">Super Close<br/>
-  		     </fieldset>
-		      <button id="save_button">Save</button>
-	      </form>
-		</div>
+				</fieldset>
+			</div>
+			</div>
+		</div><!-- content -->
+	</div>
 
 	</body>
 </html>

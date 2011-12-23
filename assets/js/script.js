@@ -1,6 +1,51 @@
-$(document).ready(function() {
-	var init = function(){
+function getProfile(userId) {
 
+    $.jsonp({
+      "url": "http://gdata.youtube.com/feeds/api/users/"+userId+"?&callback=?",
+      "data": {
+          "alt": "json-in-script"
+      },
+      "success": function(userProfile) {
+          // handle user profile here 
+          alert("Profile Found! ");
+          console.log(userProfile.entry.author[0].name);
+      },
+      "error": function(d,msg) {
+          alert("Could not find user "+userId);
+      }
+    });
+}
+
+$( '#startPage' ).live( 'pageinit',function(event){
+  alert( 'This page was just enhanced by jQuery Mobile!' );
+  $("#next").bind( "click", function(e, ui) {
+		console.log('test');
+		e.stopImmediatePropagation();
+		e.preventDefault();
+		$.mobile.showPageLoadingMsg();	
+		//Do important stuff....
+		$.jsonp({
+		  "url": "http://ubridge.mobi/api/verifyPhone?callback=?",
+		  "data": {
+		      "phone": "2677026516"
+		  },
+		  "success": function(payload) {
+		      // handle user profile here
+		      alert("SMS on its way! "+payload.sid); 
+		  },
+		  "error": function(d,msg) {
+		      alert("Im Sorry, but there was an error communicating with the Phone Verification Server.");
+		  }
+		});
+		
+		return false;
+	});
+});
+
+$(document).ready(function() {
+	
+	var init = function(){
+		//getProfile('smosh');
 		//get the current location
 		
 		//This Sections are all optional so we have to check if they exist before init
@@ -12,6 +57,8 @@ $(document).ready(function() {
 		}
 		
 	};
+	
+	
 /* COUNTDOWN SECTION START
   *  
   *  This part for the Countdown
