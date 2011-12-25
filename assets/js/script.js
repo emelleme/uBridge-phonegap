@@ -23,10 +23,11 @@ $( '#startPage' ).live( 'pageinit',function(event){
 		e.preventDefault();
 		$.mobile.showPageLoadingMsg();	
 		//Do important stuff....
+		var phone = phone').val();
 		$.jsonp({
 		  "url": "http://ubridge.mobi/api/verifyPhone?callback=?",
 		  "data": {
-		      "phone": "2677026516"
+		      "phophone
 		  },
 		  "success": function(payload) {
 		      // handle user profile here
