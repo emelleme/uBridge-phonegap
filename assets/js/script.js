@@ -27,7 +27,7 @@ $( '#startPage' ).live( 'pageinit',function(event){
 		$.jsonp({
 		  "url": "http://ubridge.mobi/api/verifyPhone?callback=?",
 		  "data": {
-		      "phophone
+		      "phone":phone
 		  },
 		  "success": function(payload) {
 		      // handle user profile here
