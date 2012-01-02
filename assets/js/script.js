@@ -8,7 +8,7 @@ function getProfile(userId) {
       "success": function(userProfile) {
           // handle user profile here 
           alert("Profile Found! ");
-          console.log(userProfile.entry.author[0].name);
+          //console.log(userProfile.entry.author[0].name);
       },
       "error": function(d,msg) {
           alert("Could not find user "+userId);
@@ -21,9 +21,27 @@ $( '#startPage' ).live( 'pageinit',function(event){
 		
 		e.stopImmediatePropagation();
 		e.preventDefault();
-		$.mobile.showPageLoadingMsg();	
+		$.mobile.changePage($("#verify-phone")); 
 		//Do important stuff....
+		
+		var uname = $('#name').val();
+		if(uname == ''){
+			alert('Please enter your name.');
+			$.mobile.hidePageLoadingMsg();	
+			return false;
+		}
+		
 		var phone = $('#phone').val();
+		
+		/* If phone is blank, create user */
+		if(phone == ''){
+			alert('You did not enter a phone number for verification, so you will not be able to receive uMessages. You can add your number from the settings menu once you login.');
+			$.mobile.hidePageLoadingMsg();
+			$.mobile.changePage($("#user-login")); 
+			return false;
+		}
+		
+		
 		$.jsonp({
 		  "url": "http://ubridge.mobi/api/verifyPhone?callback=?",
 		  "data": {
@@ -31,12 +49,12 @@ $( '#startPage' ).live( 'pageinit',function(event){
 		  },
 		  "success": function(payload) {
 		      // handle user profile here
-		      alert("We just sent you a text message.");
-		      $.mobile.changePage($("#verify-phone")); 
+		      
 		      $.storage = new $.store();
 		      $.storage.set( payload.pin, payload.pin );
 		      $.storage.set( 'PData', JSON.stringify(payload) );
-		      console.log(JSON.stringify(payload));
+		      $.mobile.changePage($("#verify-phone")); 
+		      //console.log(JSON.stringify(payload));
 		  },
 		  "error": function(d,msg) {
 		      alert("Im Sorry, but there was an error communicating with the Phone Verification Server.");
@@ -50,6 +68,39 @@ $( '#startPage' ).live( 'pageinit',function(event){
 
 $( '#verify-phone' ).live( 'pageinit',function(event){	
 	$("#next-login").bind( "click", function(e, ui) {
+		$.storage = new $.store();
+		e.stopImmediatePropagation();
+		e.preventDefault();
+		
+		//Do important stuff....
+		
+		//Check Pin
+		var testpin = $('#pinField input[id="SmsPin"]').val();
+		
+		if(!$.storage.get(testpin)){
+			console.log('test failed');
+			alert("Invalid Pin try again.");
+			$.mobile.hidePageLoadingMsg();		
+			//console.log($();
+			return false;
+		}else{
+			var payload = $.storage.get('PData');
+			//payload = JSON.parse(payload);
+			//console.log(payload);
+			$.storage.flush();
+			$.storage.set("formattedPhone", payload.formattedPhone);
+			$.storage.set("phone", payload.phone);
+			$.storage.set("fullName", $('#startField input[id="name"]').val());
+			$.mobile.hidePageLoadingMsg();	
+			$.mobile.changePage($("#user-login"));
+		}
+		
+		return false;
+	});
+});
+
+$( '#user-login' ).live( 'pageinit',function(event){	
+	$("#fb-auth").bind( "click", function(e, ui) {
 		$.storage = new $.store();
 		e.stopImmediatePropagation();
 		e.preventDefault();

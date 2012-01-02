@@ -41,12 +41,12 @@
 					<h3>Welcome! Enter your name and phone number below to begin.</h3>
 				<div data-role="fieldcontain">
 			     <h4>Name</h4>
-			     <input type="text" name="name" id="name" placeholder="Your Name e.g. John Doe" value=""  />
+			     <input type="text" name="name" id="name" placeholder="Your Name e.g. John Doe" value="" required />
 				</div>
 				
 				<div data-role="fieldcontain">
 				<h4>Phone Number</h4>
-			     <input type="text" name="phone" id="phone" placeholder="uMessages sent here" value=""  />
+			     <input type="text" name="phone" id="phone" placeholder="(optional) uMessages sent here" value="" required pattern="^(?:\([2-9]\d{2}\)\ ?|[2-9]\d{2}(?:\-?|\ ?))[2-9]\d{2}[- ]?\d{4}$" />
 				</div>
 					
 		
@@ -101,9 +101,9 @@
 				<fieldset id="pinField" data-role="controlgroup" data-type="vertical" data-role="fieldcontain"> 
 					<h3>Choose from below to login.</h3>
 				<div data-role="fieldcontain">
-					<div><button id="next-login" type="submit" data-theme="c">Facebook</button></div>
-					<div><button id="next-login" type="submit" data-theme="c">Twitter</button></div>
-					<div><button id="next-login" type="submit" data-theme="c">Foursquare</button></div>
+					<div><button id="fb-auth" type="submit" data-theme="c">Facebook</button></div>
+				<!--	<div><button id="next-login" type="submit" data-theme="c">Twitter</button></div>
+					<div><button id="next-login" type="submit" data-theme="c">Foursquare</button></div> -->
 				</div>
 
 				</fieldset>
