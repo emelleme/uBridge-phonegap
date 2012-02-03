@@ -43,7 +43,7 @@ $("#check-code").bind( "click", function(e, ui) {
 	
 	var pin = $('#pin').val();
 	$.storage = new $.store();
-	var phone = $.storage.get('phone')
+	
 	var data = $.storage.get('PData');
 	data = JSON.parse(data);
 	var phone = data.phone;
