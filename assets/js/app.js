@@ -1,56 +1,79 @@
-// 
-//  --- our app behavior logic ---
-//
-run(function () {
-    // immediately invoked on first run
-    var init = (function () {
-        if (navigator.network.connection.type == Connection.NONE) {
-            alert("No internet connection - we won't be able to show you any maps");
-        } else {
-            alert("We can reach Google - get ready for some awesome maps!");
-        }
-    })();
-    
-    // a little inline controller
-    when('#welcome');
-    when('#settings', function() {
-		// load settings from store and make sure we persist radio buttons.
-		store.get('config', function(saved) {
-			if (saved) {
-				if (saved.map) {
-					x$('input[value=' + saved.map + ']').attr('checked',true);
-				}
-				if (saved.zoom) {
-					x$('input[name=zoom][value="' + saved.zoom + '"]').attr('checked',true);
-				}
-			}
-		});
-	});
-    when('#map', function () {
-        store.get('config', function (saved) {
-            // construct a gmap str
-            var map  = saved ? saved.map || ui('map') : ui('map')
-            ,   zoom = saved ? saved.zoom || ui('zoom') : ui('zoom')
-            ,   path = "http://maps.google.com/maps/api/staticmap?center=";
-			
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var location = "" + position.coords.latitude + "," + position.coords.longitude;
-                path += location + "&zoom=" + zoom;
-                path += "&size=250x250&maptype=" + map + "&markers=color:red|label:P|";
-                path += location + "&sensor=false";
+$(function(){	
+$("#next").bind( "click", function(e, ui) {
 
-                x$('img#static_map').attr('src', path);
-            }, function () {
-                x$('img#static_map').attr('src', "assets/img/gpsfailed.png");
-            });
-        });
-    });
-    when('#save', function () {
-        store.save({
-            key:'config',
-            map:ui('map'),
-            zoom:ui('zoom')
-        });
-        display('#welcome');
-    });
+	e.stopImmediatePropagation();
+	e.preventDefault();
+	
+	var phone = $('#phone').val();
+	var fullName = $('#name').val();
+	
+	
+	/* If phone is blank, create user */
+	if(phone == ''){
+		alert('You did not enter a phone number for verification, so you will not be able to receive uMessages. You can add your number from the settings menu once you login.');
+		 
+		return false;
+	}
+	
+	$.jsonp({
+		  "url": "https://api-microbridge.rhcloud.com/api/verifyPhone?callback=?",
+		  "data": {
+		      "phone":phone,
+		      "fullName": fullName
+		  },
+		  "success": function(payload) {
+		      // handle user profile here
+		      $('.hero-unit').html();	
+		      $.storage = new $.store();
+		      $.storage.set( payload.pin, payload.pin );
+		      $.storage.set( 'PData', JSON.stringify(payload) );
+		      location.assign('verify.html');
+		      //console.log(JSON.stringify(payload));
+		  },
+		  "error": function(d,msg) {
+		      alert("Im Sorry, but there was an error communicating with the Phone Verification Server.");
+		  }
+	});
+});
+
+$("#check-code").bind( "click", function(e, ui) {
+
+	e.stopImmediatePropagation();
+	e.preventDefault();
+	
+	var pin = $('#pin').val();
+	$.storage = new $.store();
+	var data = $.storage.get('PData');
+	var phone = data.phone;
+	
+	/* If phone is blank, create user */
+	if(phone == ''){
+		alert('You did not enter a phone number for verification, so you will not be able to receive uMessages. You can add your number from the settings menu once you login.');
+		 
+		return false;
+	}
+	
+	
+	$.jsonp({
+		  "url": "https://api-microbridge.rhcloud.com/api/verifyPin?callback=?",
+		  "data": {
+		      "phone":data.phone,
+		      "a":data.a,
+		      "b":data.b
+		  },
+		  "success": function(payload) {
+		      // handle user profile here
+		      $('.hero-unit').html();	
+		      
+		      //$.cookie('the_cookie', 'the_value', { expires: 7, path: '/' });
+		      $.storage.set( 'Sid', payload.b );
+		      location.assign('success.html');
+		      //console.log(JSON.stringify(payload));
+		  },
+		  "error": function(d,msg) {
+		      alert("Im Sorry, but there was an error communicating with the Phone Verification Server.");
+		  }
+	});
+});
+
 });
