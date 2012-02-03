@@ -43,7 +43,9 @@ $("#check-code").bind( "click", function(e, ui) {
 	
 	var pin = $('#pin').val();
 	$.storage = new $.store();
+	var phone = $.storage.get('phone')
 	var data = $.storage.get('PData');
+	data = JSON.parse(data);
 	var phone = data.phone;
 	
 	/* If phone is blank, create user */
@@ -57,7 +59,8 @@ $("#check-code").bind( "click", function(e, ui) {
 	$.jsonp({
 		  "url": "https://api-microbridge.rhcloud.com/api/verifyPin?callback=?",
 		  "data": {
-		      "phone":data.phone,
+		      "phone":phone,
+		      "pin":pin,
 		      "a":data.a,
 		      "b":data.b
 		  },
