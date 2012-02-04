@@ -17,6 +17,7 @@ function getProfile(userId) {
 }
 
 $( '#startPage' ).live( 'pageinit',function(event){
+	$.storage = new $.store();
   $("#next").bind( "click", function(e, ui) {
 		
 		e.stopImmediatePropagation();
@@ -52,7 +53,7 @@ $( '#startPage' ).live( 'pageinit',function(event){
 		  "success": function(payload) {
 		      // handle user profile here
 		      
-		      $.storage = new $.store();
+		      
 		      $.storage.set( payload.pin, payload.pin );
 		      $.storage.set( 'PData', JSON.stringify(payload) );
 		      $.mobile.changePage($("#verify-phone")); 
@@ -70,16 +71,15 @@ $( '#startPage' ).live( 'pageinit',function(event){
 
 
 $( '#verify-phone' ).live( 'pageinit',function(event){	
+	$.storage = new $.store();
 	$("#next-login").bind( "click", function(e, ui) {
 		e.stopImmediatePropagation();
 	e.preventDefault();
 	$.mobile.showPageLoadingMsg();
 	var pin = $('#SmsPin').val();
-	$.storage = new $.store();
 	
 	var data = JSON.parse($.storage.get('PData'));
 	var phone = data.phone;
-	console.log(data);
 	/* If phone is blank, create user */
 	if(phone == ''){
 		alert('You did not enter a phone number for verification, so you will not be able to receive uMessages. You can add your number from the settings menu once you login.');
@@ -98,11 +98,11 @@ $( '#verify-phone' ).live( 'pageinit',function(event){
 		  },
 		  "success": function(payload) {
 		      // handle user profile here
-		      $('.hero-unit').html();	
 		      
 		      //$.cookie('the_cookie', 'the_value', { expires: 7, path: '/' });
 		      $.storage.set( 'Sid', payload.b );
 		      $.mobile.changePage($("#get-started"));
+		      $.mobile.hidePageLoadingMsg();
 		      //console.log(JSON.stringify(payload));
 		      
 		  },
@@ -116,7 +116,13 @@ $( '#verify-phone' ).live( 'pageinit',function(event){
 	});
 });
 
-$( '#user-login' ).live( 'pageinit',function(event){	
+$( '#get-started' ).live( 'pageinit',function(event){	
+	$.storage = new $.store();
+	var data = $.storage.get('PData');
+	
+	data = JSON.parse(data);
+	var fullname = data.fullName;
+	$('#get-started h2 span').html(fullname);
 	/* $("#fb-auth").bind( "click", function(e, ui) {
 		$.storage = new $.store();
 		e.stopImmediatePropagation();
