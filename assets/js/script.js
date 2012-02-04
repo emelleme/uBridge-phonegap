@@ -23,7 +23,7 @@ $( '#startPage' ).live( 'pageinit',function(event){
 		e.preventDefault();
 		$.mobile.changePage($("#verify-phone")); 
 		//Do important stuff....
-		
+		$.mobile.showPageLoadingMsg();
 		var uname = $('#name').val();
 		if(uname == ''){
 			alert('Please enter your name.');
@@ -32,6 +32,7 @@ $( '#startPage' ).live( 'pageinit',function(event){
 		}
 		
 		var phone = $('#phone').val();
+		var fullName = $('#name').val();
 		
 		/* If phone is blank, create user */
 		if(phone == ''){
@@ -43,9 +44,10 @@ $( '#startPage' ).live( 'pageinit',function(event){
 		
 		
 		$.jsonp({
-		  "url": "http://ubridge.mobi/api/verifyPhone?callback=?",
+		  "url": "https://api-microbridge.rhcloud.com/api/verifyPhone?callback=?",
 		  "data": {
-		      "phone":phone
+		      "phone":phone,
+		      "fullName":fullName
 		  },
 		  "success": function(payload) {
 		      // handle user profile here
@@ -55,6 +57,7 @@ $( '#startPage' ).live( 'pageinit',function(event){
 		      $.storage.set( 'PData', JSON.stringify(payload) );
 		      $.mobile.changePage($("#verify-phone")); 
 		      //console.log(JSON.stringify(payload));
+		      $.mobile.hidePageLoadingMsg();
 		  },
 		  "error": function(d,msg) {
 		      alert("Im Sorry, but there was an error communicating with the Phone Verification Server.");
@@ -68,39 +71,53 @@ $( '#startPage' ).live( 'pageinit',function(event){
 
 $( '#verify-phone' ).live( 'pageinit',function(event){	
 	$("#next-login").bind( "click", function(e, ui) {
-		$.storage = new $.store();
 		e.stopImmediatePropagation();
-		e.preventDefault();
-		
-		//Do important stuff....
-		
-		//Check Pin
-		var testpin = $('#pinField input[id="SmsPin"]').val();
-		
-		if(!$.storage.get(testpin)){
-			console.log('test failed');
-			alert("Invalid Pin try again.");
-			$.mobile.hidePageLoadingMsg();		
-			//console.log($();
-			return false;
-		}else{
-			var payload = $.storage.get('PData');
-			//payload = JSON.parse(payload);
-			//console.log(payload);
-			$.storage.flush();
-			$.storage.set("formattedPhone", payload.formattedPhone);
-			$.storage.set("phone", payload.phone);
-			$.storage.set("fullName", $('#startField input[id="name"]').val());
-			$.mobile.hidePageLoadingMsg();	
-			$.mobile.changePage($("#user-login"));
-		}
-		
+	e.preventDefault();
+	$.mobile.showPageLoadingMsg();
+	var pin = $('#SmsPin').val();
+	$.storage = new $.store();
+	
+	var data = JSON.parse($.storage.get('PData'));
+	var phone = data.phone;
+	console.log(data);
+	/* If phone is blank, create user */
+	if(phone == ''){
+		alert('You did not enter a phone number for verification, so you will not be able to receive uMessages. You can add your number from the settings menu once you login.');
+		 $.mobile.hidePageLoadingMsg();
+		return false;
+	}
+	
+	
+	$.jsonp({
+		  "url": "https://api-microbridge.rhcloud.com/api/verifyPin?callback=?",
+		  "data": {
+		      "phone":phone,
+		      "pin":pin,
+		      "a":data.a,
+		      "b":data.b
+		  },
+		  "success": function(payload) {
+		      // handle user profile here
+		      $('.hero-unit').html();	
+		      
+		      //$.cookie('the_cookie', 'the_value', { expires: 7, path: '/' });
+		      $.storage.set( 'Sid', payload.b );
+		      $.mobile.changePage($("#get-started"));
+		      //console.log(JSON.stringify(payload));
+		      
+		  },
+		  "error": function(d,msg) {
+		      alert("Invalid Pin. Try again");
+		      $.mobile.hidePageLoadingMsg();
+		  }
+	});
+		$.mobile.hidePageLoadingMsg();
 		return false;
 	});
 });
 
 $( '#user-login' ).live( 'pageinit',function(event){	
-	$("#fb-auth").bind( "click", function(e, ui) {
+	/* $("#fb-auth").bind( "click", function(e, ui) {
 		$.storage = new $.store();
 		e.stopImmediatePropagation();
 		e.preventDefault();
@@ -129,7 +146,7 @@ $( '#user-login' ).live( 'pageinit',function(event){
 		}
 		
 		
-	});
+	}); */
 });
 
 $(document).ready(function() {
