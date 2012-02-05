@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns		= "http://www.w3.org/ns/widgets"
 	xmlns:gap	= "http://phonegap.com/ns/1.0"
-	id		= "com.phonegap.ubridge.app3"
-	version 	= "1.2.6">
+	id		= "com.phonegap.ubridge.app4"
+	version 	= "1.2.7">
 
 	<name>uBridge Application</name>
 
