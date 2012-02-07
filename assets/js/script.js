@@ -17,7 +17,7 @@ function getProfile(userId) {
 }
 
 $( '#startPage' ).live( 'pageinit',function(event){
-	$.storage = new $.store();
+	
   $("#next").bind( "click", function(e, ui) {
 		
 		e.stopImmediatePropagation();
@@ -71,14 +71,12 @@ $( '#startPage' ).live( 'pageinit',function(event){
 
 
 $( '#verify-phone' ).live( 'pageinit',function(event){	
-	$.storage = new $.store();
 	$("#next-login").bind( "click", function(e, ui) {
 		e.stopImmediatePropagation();
 	e.preventDefault();
-	$.mobile.showPageLoadingMsg();
 	var pin = $('#SmsPin').val();
-	
-	var data = JSON.parse($.storage.get('PData'));
+	$storage = new $.store();
+	var data = $storage.get('PData');
 	var phone = data.phone;
 	/* If phone is blank, create user */
 	if(phone == ''){
@@ -87,6 +85,7 @@ $( '#verify-phone' ).live( 'pageinit',function(event){
 		return false;
 	}
 	
+	$.mobile.changePage($("#get-started"));
 	
 	$.jsonp({
 		  "url": "https://api-microbridge.rhcloud.com/api/verifyPin?callback=?",
@@ -98,11 +97,9 @@ $( '#verify-phone' ).live( 'pageinit',function(event){
 		  },
 		  "success": function(payload) {
 		      // handle user profile here
-		      
+		      $('#verify-status').html('<p><a href="http://beta.ubridge.mobi">Connect your application to your Facebook Account.</a></p><p>Text <strong>#status</strong> to <strong>202-800-1827</strong> to get a status update.</p>');
 		      //$.cookie('the_cookie', 'the_value', { expires: 7, path: '/' });
 		      $.storage.set( 'Sid', payload.b );
-		      $.mobile.changePage($("#get-started"));
-		      $.mobile.hidePageLoadingMsg();
 		      //console.log(JSON.stringify(payload));
 		      
 		  },
@@ -117,10 +114,9 @@ $( '#verify-phone' ).live( 'pageinit',function(event){
 });
 
 $( '#get-started' ).live( 'pageinit',function(event){	
-	$.storage = new $.store();
 	var data = $.storage.get('PData');
 	
-	data = JSON.parse(data);
+	data = data;
 	var fullname = data.fullName;
 	$('#get-started h2 span').html(fullname);
 	/* $("#fb-auth").bind( "click", function(e, ui) {
@@ -156,7 +152,7 @@ $( '#get-started' ).live( 'pageinit',function(event){
 });
 
 $(document).ready(function() {
-	
+	$.storage = new $.store();
 	var init = function(){
 		//getProfile('smosh');
 		//get the current location

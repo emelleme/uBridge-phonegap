@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 	<head>
-		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width, pixel-densitydpi=96"  />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width"  />
 		<title>uBridge</title>
 		<link rel="stylesheet" href="assets/css/ubridge.css" type="text/css" media="screen" />
 		 <link rel="stylesheet" href="assets/css/jquery.mobile.structure-1.0.min.css" /> 
@@ -33,7 +33,7 @@
 		<div data-role="content">	
 			<div data-role="fieldcontain">
 			<div>
-			
+			<form>
 				<fieldset id="startField" data-role="controlgroup" data-type="vertical" data-role="fieldcontain"> 
 					<h3>Welcome! Enter your name and phone number below to begin.</h3>
 				<div data-role="fieldcontain">
@@ -52,6 +52,37 @@
 				</div>
 
 				</fieldset>
+			</form>
+			</div>
+			</div>
+		</div><!-- content -->
+	</div>
+	
+	
+	<div id="verify-phone" data-role="page" data-theme="a">
+
+		<div data-role="header" id="Header" data-theme="c">
+			<h1><strong>&#956;</strong>Bridge - Verify Phone</h1>
+		</div><!-- /header -->
+
+		<div data-role="content">	
+			<div data-role="fieldcontain">
+			<div>
+			<form>
+				<fieldset id="pinField" data-role="controlgroup" data-type="vertical" data-role="fieldcontain"> 
+					<h3>We just sent you a text message...</h3>
+				<div data-role="fieldcontain">
+			     <h4>Secret Code</h4>
+			     <input type="text" name="pin" id="SmsPin" placeholder="Enter your Secret Code here" value=""  />
+				</div>
+					
+		
+				<div data-role="fieldcontain">
+					<div><button id="next-login" type="submit" data-theme="a">Next</button></div>
+				</div>
+
+				</fieldset>
+			</form>
 			</div>
 			</div>
 		</div><!-- content -->
@@ -69,8 +100,12 @@
 			
 				<h2 id="title">Welcome <span></span>!</h2>
 			<h4>We are working hard to get the application fully operational. Thanks for your patience while we get things going.</h4>
-		     <p><a href="http://beta.ubridge.mobi">Connect your application to your Facebook Account.</a></p>
-			<p>Text <strong>#status</strong> to <strong>202-800-1827</strong> to get a status update.</p>
+		     
+		     <div id="verify-status"><img src="assets/images/ajax-load-bar.gif" alt="Verifying" title="Verifying..." /><br />
+		     Verifying Number</div>
+			<!--
+			<p><a href="http://beta.ubridge.mobi">Connect your application to your Facebook Account.</a></p>
+			<p>Text <strong>#status</strong> to <strong>202-800-1827</strong> to get a status update.</p> -->
 			<hr \>
 			<a><span>&micro;</span>Bridge</a>
 		</div>
@@ -79,32 +114,5 @@
 		</div><!-- content -->
 	</div>
 	
-	<div id="verify-phone" data-role="page" data-theme="b">
-
-		<div data-role="header" id="Header" data-theme="c">
-			<h1><strong>&#956;</strong>Bridge - Verify Phone</h1>
-		</div><!-- /header -->
-
-		<div data-role="content">	
-			<div data-role="fieldcontain">
-			<div>
-			
-				<fieldset id="pinField" data-role="controlgroup" data-type="vertical" data-role="fieldcontain"> 
-					<h3>We just sent you a text message...</h3>
-				<div data-role="fieldcontain">
-			     <h4>Secret Code</h4>
-			     <input type="text" name="pin" id="SmsPin" placeholder="Enter your Secret Code here" value=""  />
-				</div>
-					
-		
-				<div data-role="fieldcontain">
-					<div><button id="next-login" type="submit" data-theme="a">Next</button></div>
-				</div>
-
-				</fieldset>
-			</div>
-			</div>
-		</div><!-- content -->
-	</div>
 	</body>
 </html>
